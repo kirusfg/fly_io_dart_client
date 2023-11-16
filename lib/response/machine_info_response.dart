@@ -42,8 +42,8 @@ class MachineInfoResponse {
     );
   }
 
-  // machine image is of the form: "registry.fly.io/cof-game-server-testing:v0.0.1"
-  // this getter extracts the version number from the image name
+  // Machine image is of the form: "registry.fly.io/image-name:v0.0.1"
+  // This getter extracts the version number from the image name
   String get serverVersion {
     var imageParts = image.split(':');
     if (imageParts.length == 2) {

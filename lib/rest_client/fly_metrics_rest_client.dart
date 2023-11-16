@@ -14,11 +14,6 @@ class FlyMetricsRestClientProvider {
     _flyRestClient ??= FlyMetricsRestClient(token);
     return _flyRestClient!;
   }
-
-  /// for testing
-  static void setFlyClient(FlyMetricsRestClient flyClient) {
-    _flyRestClient = flyClient;
-  }
 }
 
 class FlyMetricsRestClient {
@@ -29,7 +24,7 @@ class FlyMetricsRestClient {
 
   FlyMetricsRestClient(this._token, {String baseApiUri = 'https://api.fly.io'}) : _baseApiUrl = baseApiUri;
 
-  Future<FlyMetricsCpuMemResponse> getCpuMemUsage(String appName, String orgSlug) async {
+  Future<FlyMetricsCpuMemResponse> getCpuMemUsage(String appName, {String orgSlug = 'personal'}) async {
     var url = Uri.parse('$_baseApiUrl/prometheus/$orgSlug/api/v1/query');
 
     var promQLQuery = 'query=${Uri.encodeComponent('('

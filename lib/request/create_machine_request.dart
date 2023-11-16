@@ -221,14 +221,14 @@ class MachineCheck {
   final MachineCheckType type;
   final int port;
 
-  /// minimum time to wait before doing the first check
-  /// specified as a string duration like "10s"
+  /// Minimum time to wait before doing the first check
+  /// Specified as a string duration like "10s"
   final String? grace_period;
 
-  /// specified as a string duration like "10s"
+  /// Specified as a string duration like "10s"
   final String interval;
 
-  /// specified as a string duration like "10s"
+  /// Specified as a string duration like "10s"
   final String timeout;
 
   /// For http checks, the HTTP method to use to when making the request (GET / POST etc)

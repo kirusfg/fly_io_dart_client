@@ -11,8 +11,7 @@ import '../response/app_details_response.dart';
 import '../response/machine_info_response.dart';
 
 extension StringExtension on String {
-  String truncateTo(int maxLength) =>
-      (length <= maxLength) ? this : '${substring(0, maxLength)}...';
+  String truncateTo(int maxLength) => (length <= maxLength) ? this : '${substring(0, maxLength)}...';
 }
 
 class FlyMachinesRestClientProvider {
@@ -21,11 +20,6 @@ class FlyMachinesRestClientProvider {
   static FlyMachinesRestClient get(String token) {
     _flyRestClient ??= FlyMachinesRestClient(token);
     return _flyRestClient!;
-  }
-
-  /// for testing
-  static void setFlyClient(FlyMachinesRestClient flyClient) {
-    _flyRestClient = flyClient;
   }
 }
 
@@ -51,10 +45,12 @@ class FlyMachinesRestClient {
     );
 
     var body = response.body;
+    _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     return true;
   }
 
@@ -63,12 +59,14 @@ class FlyMachinesRestClient {
     var response = await http.get(url, headers: {
       'Authorization': 'Bearer $_token',
     });
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     return AppDetailsResponse.fromJsonString(body);
   }
 
@@ -81,12 +79,14 @@ class FlyMachinesRestClient {
         'Authorization': 'Bearer $_token',
       },
     );
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     return MachineInfoResponse.fromJson(jsonDecode(body));
   }
 
@@ -99,12 +99,14 @@ class FlyMachinesRestClient {
         'Authorization': 'Bearer $_token',
       },
     );
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     return MachineInfoResponse.fromJson(jsonDecode(body));
   }
 
@@ -116,12 +118,14 @@ class FlyMachinesRestClient {
         'Authorization': 'Bearer $_token',
       },
     );
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     var machines = <MachineInfoResponse>[];
     var machineListJson = jsonDecode(body) as List;
     for (var machineInfoJson in machineListJson) {
@@ -133,6 +137,7 @@ class FlyMachinesRestClient {
       }
       machines.add(MachineInfoResponse.fromJson(machineInfoJson));
     }
+
     _log.fine('listMachines for app $appName: ${machines.map((e) => e.id).join(', ')}');
     return machines;
   }
@@ -145,12 +150,14 @@ class FlyMachinesRestClient {
         'Authorization': 'Bearer $_token',
       },
     );
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, body);
     }
+
     return MachineInfoResponse.fromJson(jsonDecode(body));
   }
 
@@ -168,12 +175,14 @@ class FlyMachinesRestClient {
     ).timeout(Duration(seconds: timeoutSeconds), onTimeout: () {
       return http.Response('Timeout waiting for machine $machineId to be in state ${status.name}', 408);
     });
+
     var body = response.body;
     _log.fine('Request to $url completed with status ${response.statusCode}. Response body = ${body.truncateTo(80)}');
     if (response.statusCode >= 400) {
       _log.severe('Fly request failed: $body');
       throw FlyRestClientException(response.statusCode, '$body');
     }
+
     return machineId;
   }
 
@@ -197,20 +206,20 @@ class FlyMachinesRestClient {
     return true;
   }
 
-  /// Starts a machine.
-  /// when a machine is in stopped state, calling the start API will return 200 OK
+  /// Starts a machine and returns the previous state of the machine, if succeeded.
+  /// When a machine is in stopped state, calling the start API will return 200 OK
   /// JSON response:
   ///   {
   ///     "previous_state": "stopped"
   ///   }
   ///
-  /// when a machine is in started state, calling the start API again will return 200 OK
+  /// When a machine is in started state, calling the start API again will return 200 OK
   /// JSON response:
   ///   {
   ///     "previous_state": "started"
   ///   }
   ///
-  /// if a machine is "stopping" and we call the start API, it returns 412 Precondition Failed
+  /// If a machine is "stopping" and we call the start API, it returns 412 Precondition Failed
   /// JSON response:
   ///   {
   ///     "error": "unable to start machine from current state: 'stopping'"
@@ -252,7 +261,6 @@ class FlyMachinesRestClient {
     }
     return true;
   }
-
 }
 
 class FlyRestClientException implements Exception {
