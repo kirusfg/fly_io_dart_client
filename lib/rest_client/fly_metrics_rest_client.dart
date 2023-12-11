@@ -7,15 +7,6 @@ import '../response/fly_metrics_cpu_mem_response.dart';
 import '../response/prometheus_metrics_response.dart';
 import 'fly_machines_rest_client.dart';
 
-class FlyMetricsRestClientProvider {
-  static FlyMetricsRestClient? _flyRestClient;
-
-  static FlyMetricsRestClient get(String token) {
-    _flyRestClient ??= FlyMetricsRestClient(token);
-    return _flyRestClient!;
-  }
-}
-
 class FlyMetricsRestClient {
   static final _log = Logger('FlyMetricsRestClient');
 

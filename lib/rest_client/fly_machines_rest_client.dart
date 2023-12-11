@@ -14,15 +14,6 @@ extension StringExtension on String {
   String truncateTo(int maxLength) => (length <= maxLength) ? this : '${substring(0, maxLength)}...';
 }
 
-class FlyMachinesRestClientProvider {
-  static FlyMachinesRestClient? _flyRestClient;
-
-  static FlyMachinesRestClient get(String token) {
-    _flyRestClient ??= FlyMachinesRestClient(token);
-    return _flyRestClient!;
-  }
-}
-
 class FlyMachinesRestClient {
   static final _log = Logger('FlyMachinesRestClient');
 

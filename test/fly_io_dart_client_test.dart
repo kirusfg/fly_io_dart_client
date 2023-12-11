@@ -7,7 +7,7 @@ void main() {
   final DotEnv env = DotEnv(includePlatformEnvironment: true)..load();
 
   test('test machines list', () async {
-    var flyClient = FlyMachinesRestClientProvider.get(env['FLY_AUTH_TOKEN']!);
+    var flyClient = FlyMachinesRestClient(env['FLY_AUTH_TOKEN']!);
     var machines = await flyClient.listMachines('cof-health-test');
 
     for (var m in machines) {

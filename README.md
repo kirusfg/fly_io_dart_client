@@ -2,10 +2,10 @@
 
 ## Initialization
 
-You can create a new Fly.io client by calling `FlyMachinesRestClientProvider.get` with your Fly.io API token:
+Construct a new Fly.io client by calling `FlyMachinesRestClient` with your Fly.io API token:
 
 ```dart
-var flyClient = FlyMachinesRestClientProvider.get(FLY_AUTH_TOKEN);
+var flyClient = FlyMachinesRestClient(FLY_AUTH_TOKEN);
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ var flyClient = FlyMachinesRestClientProvider.get(FLY_AUTH_TOKEN);
 Here is a simple usage example:
 
 ```dart
-var flyClient = FlyMachinesRestClientProvider.get(env['FLY_AUTH_TOKEN']!);
+var flyClient = FlyMachinesRestClient(env['FLY_AUTH_TOKEN']!);
 var machines = await flyClient.listMachines('cof-health-test');
 
 for (final machine in machines) {
