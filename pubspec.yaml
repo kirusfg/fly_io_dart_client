@@ -1,7 +1,7 @@
 name: fly_io_client
-description: A sample command-line application.
+description: High-level API for interacting with the Fly.io API
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/chipsoffury/fly_io_dart_client
 
 environment:
   sdk: ^3.1.4
