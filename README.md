@@ -21,8 +21,6 @@ for (final machine in machines) {
           'state = ${m.state}, '
           'image = ${m.config.image}');
 }
-
-var createMachineRequest = 
 ```
 
 You can create, list, update, and delete Fly.io resources, namely - applications and machines:
