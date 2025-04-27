@@ -181,13 +181,15 @@ enum MachineServiceConcurrencyType {
 class MachineServicePort {
   final int port;
   final List<MachineServiceConnectionHandler> handlers;
+  final bool forceHttps;
 
-  MachineServicePort(this.port, this.handlers);
+  MachineServicePort(this.port, this.handlers, {this.forceHttps = false});
 
   Map<String, dynamic> toJson() {
     var jsonMap = <String, dynamic>{};
     jsonMap['port'] = port;
     jsonMap['handlers'] = handlers.map((e) => e.name).toList();
+    jsonMap['force_https'] = forceHttps;
     return jsonMap;
   }
 }
